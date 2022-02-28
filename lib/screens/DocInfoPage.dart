@@ -1,6 +1,8 @@
 
 import 'package:doctorapplicationfinal/screens/colorScheme.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class DocInfoPage extends StatelessWidget {
   @override
@@ -21,7 +23,45 @@ class docInfoPage extends StatefulWidget {
 
 class _docInfoPageState extends State<docInfoPage> {
   @override
+  final _formKey = GlobalKey<FormState>();
+  final NameEditingController = new TextEditingController();
+  DateTime selectedDate = DateTime.now();
+  final firstDate= DateTime(2010,1);
+  final lastDate=DateTime(2023,12);
+
+
+
   Widget build(BuildContext context) {
+    final firstname = TextFormField(
+      autofocus: false,
+      controller: NameEditingController,
+      keyboardType: TextInputType.name,
+      validator: (value){
+        RegExp regex = new RegExp(r'^.{4,}$');
+        if(value!.isEmpty){
+          return ("Firstname cannot be empty");
+        }
+
+        if(!regex.hasMatch(value))
+        {
+          return("Please enter a valid name (minimum 3 characters required)");
+        }
+        return null;
+      },
+      onSaved: (value)
+      {
+        NameEditingController.text = value!;
+      },
+      textInputAction: TextInputAction.next,
+      decoration: InputDecoration(
+          prefixIcon: Icon(Icons.account_circle_rounded),
+          contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+          hintText: "Patients Name",
+          border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10)
+          )
+      ),
+    );
     return Scaffold(
       body: Container(
         height: MediaQuery.of(context).size.height,
@@ -98,97 +138,55 @@ class _docInfoPageState extends State<docInfoPage> {
                               fontWeight: FontWeight.w400,
                             ),),
                             SizedBox(height: 10,),
-                            Text("Available Time Slots", style: TextStyle(
+                            Text("Available Slots", style: TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.w800,
                             ),),
-                            SizedBox(height: 5,),
-                            Container(
-                              margin: EdgeInsets.only(left: 20, top: 30),
-                              child: Text('Feb 2022',
-                                style: TextStyle(
-                                  color: Color(0xff363636),
-                                  fontSize: 25,
-                                  fontFamily: 'Roboto',
-                                  fontWeight: FontWeight.w700,
-                                ),
 
-                              ),
-                            ),
+                            //Doctor timing
+                            SizedBox(height: 20,),
+                            Text("Please fill the below details of patient:", style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w800,
+                            ),),
+                            SizedBox(height: 20,),
+                            firstname,
+                            SizedBox(height: 20,),
+                            firstname,
+                            SizedBox(height: 20,),
+                            firstname,
+                            SizedBox(height: 20,),
+                            firstname,
+                            SizedBox(height: 20,),
+                            Text("Select date", style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w800,
+                            ),),
 
                             Container(
-                              margin: EdgeInsets.only(left: 20, top: 20, right: 20),
-                              height: 90,
-                              child: ListView(
-                                scrollDirection: Axis.horizontal,
-                                children: [
-                                  demoDates("Mon", "21", true),
-                                  demoDates("Tue", "22", false),
-                                  demoDates("Wed", "23", false),
-                                  demoDates("Thur", "24", false),
-                                  demoDates("Fri", "25", false),
-                                  demoDates("Sat", "26", false),
-                                  demoDates("Sun", "27", false),
-                                  demoDates("Mon", "28", false),
-                                ],
+                              height: 200,
+
+
+                              child: CupertinoDatePicker(
+                                mode: CupertinoDatePickerMode.dateAndTime,
+                                initialDateTime: selectedDate,
+                                minimumDate: firstDate,
+                                maximumDate: lastDate,
+                                onDateTimeChanged: (newDate){
+                                  setState(() {
+                                    selectedDate = newDate;
+                                  });
+                                },
                               ),
+
                             ),
-                            Container(
-                              margin: EdgeInsets.only(left: 20, top: 30),
-                              child: Text('Morning',
-                                style: TextStyle(
-                                  color: Color(0xff363636),
-                                  fontSize: 25,
-                                  fontFamily: 'Roboto',
-                                  fontWeight: FontWeight.w700,
-                                ),
-                              ),
-                            ),
-                            Container(
-                              margin: EdgeInsets.only(right: 20),
-                              child: GridView.count(
-                                shrinkWrap: true,
-                                crossAxisCount: 3,
-                                physics: NeverScrollableScrollPhysics(),
-                                childAspectRatio: 2.7,
-                                children: [
-                                  doctorTimingsData("08:30 AM", true),
-                                  doctorTimingsData("08:30 AM", false),
-                                  doctorTimingsData("08:30 AM", false),
-                                  doctorTimingsData("08:30 AM", false),
-                                  doctorTimingsData("08:30 AM", false),
-                                  doctorTimingsData("08:30 AM", false),
-                                ],
-                              ),
-                            ),
-                            Container(
-                              margin: EdgeInsets.only(left: 25, top: 30),
-                              child: Text('Evening',
-                                style: TextStyle(
-                                  color: Color(0xff363636),
-                                  fontSize: 25,
-                                  fontFamily: 'Roboto',
-                                  fontWeight: FontWeight.w700,
-                                ),
-                              ),
-                            ),
-                            Container(
-                              margin: EdgeInsets.only(right: 20),
-                              child: GridView.count(
-                                shrinkWrap: true,
-                                crossAxisCount: 3,
-                                physics: NeverScrollableScrollPhysics(),
-                                childAspectRatio: 2.6,
-                                children: [
-                                  doctorTimingsData("08:30 AM", true),
-                                  doctorTimingsData("08:30 AM", false),
-                                  doctorTimingsData("08:30 AM", false),
-                                  doctorTimingsData("08:30 AM", false),
-                                  doctorTimingsData("08:30 AM", false),
-                                  doctorTimingsData("08:30 AM", false),
-                                ],
-                              ),
-                            ),
+                            Text("Select Time", style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w800,
+                            ),),
+
+
+
                             Container(
                               alignment: Alignment.center,
                               width: MediaQuery.of(context).size.width,
@@ -206,13 +204,19 @@ class _docInfoPageState extends State<docInfoPage> {
                                   ),
                                 ],
                               ),
-                              child: Text(
-                                'Make An Appointment',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 20,
-                                  fontFamily: 'Roboto',
-                                  fontWeight: FontWeight.w500,
+
+                              child: GestureDetector(
+                                onTap: (){
+                                  Fluttertoast.showToast(msg: "Appointment created successfully");
+                                },
+                                child: Text(
+                                  'Make An Appointment',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 20,
+                                    fontFamily: 'Roboto',
+                                    fontWeight: FontWeight.w500,
+                                  ),
                                 ),
                               ),
                             )],
@@ -296,17 +300,24 @@ Widget demoDates(String day, String date, bool isSelected) {
     child: Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Container(
-          child: Text(
-            day,
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 20,
-              fontFamily: 'Roboto',
-              fontWeight: FontWeight.w500,
+        InkWell(
+          child: Container(
+            child: Text(
+              day,
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 20,
+                fontFamily: 'Roboto',
+                fontWeight: FontWeight.w500,
+              ),
             ),
+
           ),
+          onTap: () {
+            ;
+          },
         ),
+        
         Container(
           margin: EdgeInsets.only(top: 10),
           padding: EdgeInsets.all(7),
