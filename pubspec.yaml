@@ -38,6 +38,7 @@ dependencies:
   firebase_core: ^1.13.1
   firebase_auth: ^3.3.9
   fluttertoast: ^8.0.9
+  animated_splash_screen: ^1.2.0
 
 dev_dependencies:
   flutter_test:
@@ -64,7 +65,11 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/logo.gif
-
+    - assets/font/avenir.ttf
+    - assets/images/category/
+    - assets/images/docinfo/
+    - assets/images/docprofile/
+    - assets/images/docprofile/splash.gif
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
