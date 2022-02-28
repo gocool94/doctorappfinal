@@ -1,10 +1,10 @@
 
 
-//import 'package:cloud_firestore/cloud_firestore.dart';
-//import 'package:doctor_app_login_singup/model/user_model.dart';
-//import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:doctorapplicationfinal/model/user_model.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-//import 'package:fluttertoast/fluttertoast.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'home_screen.dart';
 
 class RegistrationScreen extends StatefulWidget {
@@ -16,7 +16,7 @@ class RegistrationScreen extends StatefulWidget {
 
 class _RegistrationScreenState extends State<RegistrationScreen> {
 
-  //final _auth = FirebaseAuth.instance;
+  final _auth = FirebaseAuth.instance;
 
   final _formkey = GlobalKey<FormState>();
 
@@ -259,44 +259,44 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   }
 
   void Signup(String email,String password) async {
-  //   if (_formkey.currentState!.validate()){
-  //     await _auth.createUserWithEmailAndPassword(email: email, password: password)
-  //         .then((value) =>
-  //     {
-  //       postvaluetofirestore()}
-  //     ).catchError((e)
-  //         {
-  //         Fluttertoast.showToast(msg: e!.message);
-  //         });
-  //   }
-  // }
-  // postvaluetofirestore() async
-  // {
-  //
-  //   FirebaseFirestore firebasefirestore = FirebaseFirestore.instance;
-  //   User? user = _auth.currentUser;
-  //
-  //   UserModel userModel = UserModel();
-  //
-  //   userModel.emailid= user!.email;
-  //   userModel.uid=user.uid;
-  //
-  //   userModel.name=NameEditingController.text;
-  //   userModel.place=PlaceEditingController.text;
-  //
-  //   await firebasefirestore
-  //         .collection("users")
-  //       .doc(user.uid)
-  //   .set(userModel.toMap());
-  //
-  //   Fluttertoast.showToast(msg: "Account created successfully");
-  //
-  //   Navigator.pushAndRemoveUntil(
-  //       (context),
-  //       MaterialPageRoute(builder: (context)
-  //       => Homesscreen()),
-  //   (route)
-  //       =>false);
+    if (_formkey.currentState!.validate()){
+      await _auth.createUserWithEmailAndPassword(email: email, password: password)
+          .then((value) =>
+      {
+        postvaluetofirestore()}
+      ).catchError((e)
+          {
+          Fluttertoast.showToast(msg: e!.message);
+          });
+    }
+  }
+  postvaluetofirestore() async
+  {
+
+    FirebaseFirestore firebasefirestore = FirebaseFirestore.instance;
+    User? user = _auth.currentUser;
+
+    UserModel userModel = UserModel();
+
+    userModel.emailid= user!.email;
+    userModel.uid=user.uid;
+
+    userModel.name=NameEditingController.text;
+    userModel.place=PlaceEditingController.text;
+
+    await firebasefirestore
+          .collection("users")
+        .doc(user.uid)
+    .set(userModel.toMap());
+
+    Fluttertoast.showToast(msg: "Account created successfully");
+
+    Navigator.pushAndRemoveUntil(
+        (context),
+        MaterialPageRoute(builder: (context)
+        => Homesscreen()),
+    (route)
+        =>false);
 
 
 

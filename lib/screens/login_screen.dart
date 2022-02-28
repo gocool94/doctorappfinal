@@ -1,9 +1,9 @@
-//import 'package:doctor_app_login_singup/screens/registration_screen.dart';
-//import 'package:firebase_auth/firebase_auth.dart';
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:doctorapplicationfinal/screens/registration_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-//import 'package:fluttertoast/fluttertoast.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 import 'home_screen.dart';
 
@@ -22,7 +22,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController emailController = new TextEditingController();
   final TextEditingController passwordController = new TextEditingController();
 
-  //final _auth = FirebaseAuth.instance;
+  final _auth = FirebaseAuth.instance;
 
   Widget build(BuildContext context) {
 
@@ -167,18 +167,18 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void signIn(String email, String password) async {
-    // if(_formKey.currentState!.validate()){
-    //   await _auth
-    //       .signInWithEmailAndPassword(email: email, password: password)
-    //       .then((uid) => {
-    //         Fluttertoast.showToast(msg: "Login Succesful"),
-    //         Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)
-    //         =>Homesscreen()))
-    //   }).catchError((e){
-    //     Fluttertoast.showToast(msg: e!.message);
-    //   }
-    //   );
-    // }
+    if(_formKey.currentState!.validate()){
+      await _auth
+          .signInWithEmailAndPassword(email: email, password: password)
+          .then((uid) => {
+            Fluttertoast.showToast(msg: "Login Succesful"),
+            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)
+            =>Homesscreen()))
+      }).catchError((e){
+        Fluttertoast.showToast(msg: e!.message);
+      }
+      );
+    }
     }
 }
 
